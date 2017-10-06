@@ -1,0 +1,26 @@
+{
+  "name": "weeklytasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "createTable": "AWS_PROFILE=myobad AWS_DEFAULT_REGION=ap-southeast-2 TF_VAR_name=Contacts"
+  },
+  "author": "Michael",
+  "license": "ISC",
+  "dependencies": {
+    "@myob/express-engine": "^1.17.2",
+    "@myob/express-inject": "^1.0.2",
+    "aws-sdk": "^2.97.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "lodash": "^4.17.4",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodeman": "^1.1.2"
+  }
+}
