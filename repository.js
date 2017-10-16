@@ -79,15 +79,26 @@ function getContact(id){
 }
 
 function searchContact(query){
-    console.log(query);
     var dynamodb = new AWS.DynamoDB.DocumentClient();
     params = {
         TableName:"PhoneBook",
-        IndexName:"id",
-        KeyConditionExpression: "firstName = :a",
+        ProjectionExpression:"#firstName, lastName, instrument, phoneNumber",
+        FilterExpression: "#firstName = :a",
+        ExpressionAttributeNames:{
+            "#firstName": "firstName"
+        },
         ExpressionAttributeValues: {
             ":a": query
         },
+    };
+    return dynamodb.scan(params).promise()
+}
+
+function listContact(){
+    var dynamodb = new AWS.DynamoDB.DocumentClient();
+    params = {
+        TableName:"PhoneBook",
+        ProjectionExpression:"firstName, lastName, instrument, phoneNumber"
     };
     return dynamodb.scan(params).promise()
 }
@@ -97,5 +108,6 @@ module.exports = {
     getContact,
     putContact,
     deleteContact,
-    searchContact
+    searchContact,
+    listContact
 };
