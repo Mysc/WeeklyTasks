@@ -3,68 +3,24 @@ const express = require("express"); //import express from 'express'
 const app = express();
 var router = require('express').Router();
 
-const repository = require("./repository");
-const controller = require("./controller");
+const repository = require("./src/repository");
+const controller = require("./src/controller");
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// app.get('/phonebook/:id',() => {
-//     console.log('*********', controller.get)
-// }
-//);
 
-app.get(//'/phonebook/:id', controller.get);
-'/phonebook/:id', (req, res) => {
-    return repository.getContact(req.params.id).then((result) => {
-        res.send(
-            result.Item
-        );
-    })
-});
+app.get('/phonebook/:id', controller.getContact);
 
-app.get('/phonebook/search/:firstName', (req, res) => {
-    repository.searchContact(req.params.firstName).then((result) => {
-        res.send(
-            result.Items
-        );
-    })
-});
+app.get('/phonebook/search/:firstName', controller.searchContact);
 
-app.get('/phonebook', (req, res) => {
-    repository.listContact().then((result) => {
-        res.send(
-            result.Items
-        );
-    })
-});
+app.get('/phonebook', controller.listContacts);
 
-app.post('/phonebook', (req, res) => {
-    //const test = repository.addContact(req.body)
-    repository.addContact(req.body).then((result) => {
-        res.send({
-            "statusCode": "200"
-        });
-    })
-});
+app.post('/phonebook', controller.postContact);
 
-app.put('/phonebook/:id', (req, res) => {
-    repository.putContact(req.body, req.params.id).then((result) => {
-        console.log('Contact edited',result);
-        res.send(
-            result
-        );
-    })
-});
+app.put('/phonebook/:id', controller.putContact);
 
-app.delete('/phonebook/:id', (req, res) => {
-    repository.deleteContact(req.params.id).then((result) => {
-        console.log('Contact deleted',result);
-        res.send({
-            "statusCode": "204"
-        });
-    })
-});
+app.delete('/phonebook/:id', controller.deleteContact);
 
 //TODO ./studentname also some textboxes with a button called "save"
 
